@@ -1,4 +1,4 @@
-package ru.vsu.cs.aslanovrenat.oldtasks.task8;
+package ru.vsu.cs.aslanovrenat.task8;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +77,7 @@ public class Algoritmes {
         int year = arr[1];
         days = switch (arr[0]) {
             case 2 -> leapYear(year);
-            case 1, 3, 5, 7, 8, 10, 12 -> 31;
+            case 0, 1, 3, 5, 7, 8, 10, 12 -> 31;
             case 4, 6, 9, 11 -> 30;
             default -> days;
         };
@@ -101,7 +101,7 @@ public class Algoritmes {
             month += 10;
         } else
             month -= 2;
-        return ((1 + 31 * month / 12 + year + year / 4 - year / 100 + year / 400) % 7);
+        return (1 + 31 * month / 12 + year + year / 4 - year / 100 + year / 400) % 7;
     }
 
     //Не баг а фича при делниее на 7

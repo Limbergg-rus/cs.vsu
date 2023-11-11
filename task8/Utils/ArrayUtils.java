@@ -1,4 +1,4 @@
-package ru.vsu.cs.aslanovrenat.oldtasks.task8.Utils;
+package ru.vsu.cs.aslanovrenat.task8.Utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;

@@ -1,4 +1,4 @@
-package ru.vsu.cs.aslanovrenat.oldtasks.task8;
+package ru.vsu.cs.aslanovrenat.task8;
 
 import java.io.*;
 import java.util.*;

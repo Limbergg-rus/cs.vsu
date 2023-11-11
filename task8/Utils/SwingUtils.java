@@ -1,4 +1,4 @@
-package ru.vsu.cs.aslanovrenat.oldtasks.task8.Utils;
+package ru.vsu.cs.aslanovrenat.task8.Utils;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;

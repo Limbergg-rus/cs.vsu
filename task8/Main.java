@@ -1,4 +1,4 @@
-package ru.vsu.cs.aslanovrenat.oldtasks.task8;
+package ru.vsu.cs.aslanovrenat.task8;
 
 import ru.vsu.cs.aslanovrenat.task8.Utils.SwingUtils;
 
@@ -6,48 +6,12 @@ import java.io.PrintStream;
 import java.util.Locale;
 
 import static ru.vsu.cs.aslanovrenat.task8.Algoritmes.calendarPrinter;
+import static ru.vsu.cs.aslanovrenat.task8.CmdParams.parseArgs;
 import static ru.vsu.cs.aslanovrenat.task8.InputAndOutput.inputArray;
 import static ru.vsu.cs.aslanovrenat.task8.InputAndOutput.outputArray;
 
 
 public class Main {
-    public static class CmdParams {
-        public String inputFile;
-        public String outputFile;
-        public boolean error;
-        public boolean help;
-        public boolean window;
-    }
-
-    //Парсинг аргументов
-    public static CmdParams parseArgs(String[] args) {
-        CmdParams params = new CmdParams();
-
-        if (args.length > 0) {
-            if (args[0].equals("--help")) {
-                params.help = true;
-                return params;
-            }
-            if (args[0].equals("--window")) {
-                params.window = true;
-                return params;
-            }
-            if (args.length < 2) {
-                params.help = true;
-                params.error = true;
-                return params;
-            }
-            params.inputFile = args[1];
-            if (args.length > 2) {
-                params.outputFile = args[2];
-            }
-        } else {
-            params.help = true;
-            params.error = true;
-        }
-        return params;
-    }
-
     public static void main(String[] args) throws Exception {
         CmdParams params = parseArgs(args);
         if (params.help) {
@@ -72,7 +36,7 @@ public class Main {
     }
 
     //Открытие окна
-    public static void winMain() throws Exception {
+    public static void winMain() {
         Locale.setDefault(Locale.ROOT);
         SwingUtils.setDefaultFont("Microsoft Sans Serif", 18);
         java.awt.EventQueue.invokeLater(new Runnable() {
