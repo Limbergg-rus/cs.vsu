@@ -1,7 +1,13 @@
 package ru.vsu.cs.aslanovrenat.oldtasks.task9;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Scanner;
 
 public class InputAndOutput {
     // Считывание Листа из файла
@@ -18,7 +24,7 @@ public class InputAndOutput {
     // Вывод Листа в файл
     public static void outputListArray(String fileName, List<Integer> array) {
         try (FileWriter writer = new FileWriter(fileName, false)) {
-            writer.write(array + ",\n");
+            writer.write(array + "\n");
             writer.flush();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());

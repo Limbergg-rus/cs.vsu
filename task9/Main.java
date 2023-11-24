@@ -1,6 +1,7 @@
 package ru.vsu.cs.aslanovrenat.oldtasks.task9;
 
-import ru.vsu.cs.aslanovrenat.task9.Utils.SwingUtils;
+import org.apache.commons.cli.*;
+import ru.vsu.cs.aslanovrenat.oldtasks.task9.Utils.SwingUtils;
 
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
@@ -8,37 +9,57 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static ru.vsu.cs.aslanovrenat.task9.CmdParams.parseArgs;
-import static ru.vsu.cs.aslanovrenat.task9.InputAndOutput.inputListArray;
-import static ru.vsu.cs.aslanovrenat.task9.InputAndOutput.outputListArray;
+import static ru.vsu.cs.aslanovrenat.oldtasks.task9.InputAndOutput.inputListArray;
+import static ru.vsu.cs.aslanovrenat.oldtasks.task9.InputAndOutput.outputListArray;
 
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException {
-        CmdParams params = parseArgs(args);
-        if (params.help) {
-            PrintStream out = params.error ? System.err : System.out;
-            out.println("Usage:");
-            out.println("  <cmd> args <input-file> (<output-file>)");
-            out.println("  <cmd> --help");
-            out.println("  <cmd> --window  // show window");
-            System.exit(params.error ? 1 : 0);
-        }
-        if (params.window) {
-            winMain();
+    public static final String PROGRAM_NAME_IN_HELP = "program (-h | -w | -i <in-file> [-o <out-file>])";
 
+    public static void main(String[] args) throws FileNotFoundException {
+
+        Options cmdLineOptions = new Options();
+        cmdLineOptions.addOption("h", "help", false, "Show help");
+        cmdLineOptions.addOption("w", "window", false, "Use window user interface");
+        cmdLineOptions.addOption("i", "input-file", true, "Input file");
+        cmdLineOptions.addOption("o", "output-file", true, "Output file");
+
+        CommandLineParser parser = new DefaultParser();
+        CommandLine cmdLine = null;
+
+        try {
+            cmdLine = parser.parse(cmdLineOptions, args);
+        } catch (Exception e) {
+            new HelpFormatter().printHelp(PROGRAM_NAME_IN_HELP, cmdLineOptions);
+            System.exit(1);
+        }
+
+        if (cmdLine.hasOption("h")) {
+            new HelpFormatter().printHelp(PROGRAM_NAME_IN_HELP, cmdLineOptions);
+            System.exit(1);
+        }
+        if (cmdLine.hasOption("w")) {
+            winMain();
         } else {
-            String input = args[0];
-            String output = args[1];
+            if (!cmdLine.hasOption("i")) {
+                new HelpFormatter().printHelp(PROGRAM_NAME_IN_HELP, cmdLineOptions);
+                System.exit(1);
+            }
+            String inputFilename = cmdLine.getOptionValue("i");
             List<Integer> zero = new ArrayList<>();
-            zero = inputListArray(input);
+            zero = inputListArray(inputFilename);
             Algorithms.process(zero);
-            if (input.isEmpty() || output.isEmpty()) {
-                System.err.printf("Can't read file from \"%s\"%n", params.inputFile);
+            String outputFilename = cmdLine.getOptionValue("o");
+            outputListArray(outputFilename, zero);
+
+            if (zero == null) {
+                System.err.printf("Can't read array from \"%s\"%n", inputFilename);
                 System.exit(2);
             }
-            outputListArray(output, zero);
-        }
 
+            PrintStream out = (cmdLine.hasOption("o")) ? new PrintStream(cmdLine.getOptionValue("o")) : System.out;
+            out.println(zero);
+            out.close();
+        }
     }
 
     public static void winMain() {

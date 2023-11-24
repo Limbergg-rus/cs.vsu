@@ -1,8 +1,8 @@
 package ru.vsu.cs.aslanovrenat.oldtasks.task9;
 
-import ru.vsu.cs.aslanovrenat.task9.Utils.ArrayUtils;
-import ru.vsu.cs.aslanovrenat.task9.Utils.JTableUtils;
-import ru.vsu.cs.aslanovrenat.task9.Utils.SwingUtils;
+import ru.vsu.cs.aslanovrenat.oldtasks.task9.Utils.ArrayUtils;
+import ru.vsu.cs.aslanovrenat.oldtasks.task9.Utils.JTableUtils;
+import ru.vsu.cs.aslanovrenat.oldtasks.task9.Utils.SwingUtils;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -10,8 +10,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-
-
 public class Window extends JFrame {
     private JButton buttonLoadInputFromFile;
     private JButton buttonSaveInputInfoFile;

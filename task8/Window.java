@@ -29,6 +29,8 @@ public class Window extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
 
+
+
         JTableUtils.initJTableForArray(tableInput, 80, true, true, true, true);
         JTableUtils.initJTableForArray(tableOutput, 40, true, true, true, true);
         //tableOutput.setEnabled(false);

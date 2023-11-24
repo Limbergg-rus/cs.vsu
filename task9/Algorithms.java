@@ -1,6 +1,6 @@
 package ru.vsu.cs.aslanovrenat.oldtasks.task9;
 
-import ru.vsu.cs.aslanovrenat.task9.Utils.JTableUtils;
+import ru.vsu.cs.aslanovrenat.oldtasks.task9.Utils.JTableUtils;
 
 import javax.swing.*;
 import java.util.List;
