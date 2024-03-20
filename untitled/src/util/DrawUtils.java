@@ -1,9 +1,6 @@
-package ru.vsu.cs.util;
+package util;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
@@ -18,7 +15,7 @@ public class DrawUtils {
      * @param y - Координата y верхнего левого угла прямоугольника
      * @param width - Ширина прямоугольника
      * @param height - Высота прямоугольника
-     * @see java.awt.Graphics
+     * @see Graphics
      */
     public static void drawStringInCenter(Graphics gr, Font font, String s, int x, int y, int width, int height) {
         FontRenderContext frc = new FontRenderContext(null, true, true);
@@ -42,8 +39,8 @@ public class DrawUtils {
      * @param font Шрифт для рисования
      * @param s Строка, которую надо нарисовать
      * @param r Прямоугольник
-     * @see java.awt.Graphics
-     * @see java.awt.Rectangle
+     * @see Graphics
+     * @see Rectangle
      */
     public static void drawStringInCenter(Graphics gr, Font font, String s, Rectangle r) {
         drawStringInCenter(gr, font, s, r.x, r.y, r.width, r.height);

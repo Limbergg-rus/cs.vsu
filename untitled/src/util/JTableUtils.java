@@ -1,12 +1,12 @@
-package ru.vsu.cs.util;
+package util;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Insets;
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -14,36 +14,9 @@ import java.beans.PropertyChangeEvent;
 import java.lang.reflect.Array;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
-import javax.swing.AbstractListModel;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.JViewport;
-import javax.swing.ListCellRenderer;
-import javax.swing.ListModel;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.border.Border;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableModel;
 
 
 /**
@@ -174,6 +147,16 @@ public class JTableUtils {
         scrollPane.getRowHeader().getView().setBackground(scrollPane.getColumnHeader().getBackground());
     }
 
+    public static void initJTableForArray(
+            JTable table, int defaultColWidth,
+            boolean showRowsIndexes, boolean showColsIndexes,
+            boolean changeRowsCountButtons, boolean changeColsCountButtons,
+            int changeButtonsSize, int changeButtonsMargin
+    ) {
+        initJTableForArray(table, defaultColWidth, showRowsIndexes, showColsIndexes, changeRowsCountButtons,
+                changeColsCountButtons, changeButtonsSize, changeButtonsMargin, new String[]{});
+    }
+
     /**
      * Настройка JTable для работы с массивами
      * @param table компонент JTable
@@ -184,12 +167,14 @@ public class JTableUtils {
      * @param changeColsCountButtons добавить кнопки для добавления/удаления столбцов
      * @param changeButtonsSize размер кнопок для изменения количества строк и столбцов
      * @param changeButtonsMargin отступ кнопок от таблицы (а также расстояние между кнопками)
+     * @param customHeaders заголовки таблицы
      */
     public static void initJTableForArray(
         JTable table, int defaultColWidth,
         boolean showRowsIndexes, boolean showColsIndexes,
         boolean changeRowsCountButtons, boolean changeColsCountButtons,
-        int changeButtonsSize, int changeButtonsMargin
+        int changeButtonsSize, int changeButtonsMargin,
+        String[] customHeaders
     ) {
         table.setCellSelectionEnabled(true);
         table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -210,6 +195,9 @@ public class JTableUtils {
         DefaultTableModel tableModel = new DefaultTableModel(new String[] { "[0]" }, 1) {
             @Override
             public String getColumnName(int index) {
+                if (index < customHeaders.length) {
+                    return customHeaders[index];
+                }
                 return String.format("[%d]", index);
             }
         };
@@ -378,21 +366,34 @@ public class JTableUtils {
     }
 
     /**
-     * Аналогичен {@link #initJTableForArray(javax.swing.JTable, int, boolean, boolean, boolean, boolean, int, int) }.
+     * Аналогичен {@link #initJTableForArray(JTable, int, boolean, boolean, boolean, boolean, int, int) }.
      * {@code changeButtonsSize} принимает значение {@link #DEFAULT_PLUSMINUS_BUTTONS_SIZE}.
      * {@code changeButtonsMargin} принимает значение {@link #DEFAULT_GAP}.
      *
-     * @see #initJTableForArray(javax.swing.JTable, int, boolean, boolean, boolean, boolean, int, int)
+     * @see #initJTableForArray(JTable, int, boolean, boolean, boolean, boolean, int, int)
      */
     public static void initJTableForArray(
         JTable table, int defaultColWidth,
         boolean showRowsIndexes, boolean showColsIndexes,
-        boolean changeRowsCountButtons, boolean changeColsCountButtons
+        boolean changeRowsCountButtons, boolean changeColsCountButtons,
+        String[] customHeaders
     ) {
         initJTableForArray(
             table, defaultColWidth,
             showRowsIndexes, showColsIndexes, changeRowsCountButtons, changeColsCountButtons,
-            22, DEFAULT_GAP
+            22, DEFAULT_GAP, customHeaders
+        );
+    }
+
+    public static void initJTableForArray(
+            JTable table, int defaultColWidth,
+            boolean showRowsIndexes, boolean showColsIndexes,
+            boolean changeRowsCountButtons, boolean changeColsCountButtons
+    ) {
+        initJTableForArray(
+                table, defaultColWidth,
+                showRowsIndexes, showColsIndexes, changeRowsCountButtons, changeColsCountButtons,
+                22, DEFAULT_GAP, new String[]{}
         );
     }
 
@@ -509,7 +510,7 @@ public class JTableUtils {
      * Запись данных из массива int[] в JTable
      * (основная реализация, закрытый метод, используется в ArrayToGrid и Array2ToGrid)
      */
-    public static void writeArrayToJTable(JTable table, int[] array) {
+    public static void writeArrayToJTable(JTable table, String array) {
         writeArrayToJTable(table, array, "%d");
     }
 

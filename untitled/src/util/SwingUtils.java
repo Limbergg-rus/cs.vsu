@@ -1,22 +1,12 @@
-package ru.vsu.cs.util;
+package util;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Window;
+import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ButtonGroup;
-import javax.swing.JComponent;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.LookAndFeel;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.plaf.FontUIResource;
 
 
 /**
@@ -163,7 +153,7 @@ public class SwingUtils {
      */
     public static void setDefaultFont(String fontName, int size) {
         UIManager.getDefaults().entrySet().forEach((entry) -> {
-            Object value = javax.swing.UIManager.get(entry.getKey());
+            Object value = UIManager.get(entry.getKey());
             if (value != null && value instanceof FontUIResource) {
                 FontUIResource fr = (FontUIResource) value;
                 fr = new FontUIResource(

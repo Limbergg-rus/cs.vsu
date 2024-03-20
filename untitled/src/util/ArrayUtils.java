@@ -1,9 +1,9 @@
-package ru.vsu.cs.util;
+package util;
 
-import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.*;
 
 public class ArrayUtils {
     private static final Random RND = new Random();
@@ -104,6 +104,8 @@ public class ArrayUtils {
         }
         return result;
     }
+
+
 
     public static int[] toIntArray(String str) {
         Scanner scanner = new Scanner(str);
@@ -486,6 +488,19 @@ public class ArrayUtils {
         return lines.toArray(new String[0]);
     }
 
+
+    public static String readLineFromFile(String fileName) throws FileNotFoundException {
+        String str = "";
+        try (Scanner scanner = new Scanner(new File(fileName), "UTF-8")) {
+
+            while (scanner.hasNext()) {
+                str += scanner.nextLine();
+            }
+            // обязательно, чтобы закрыть открытый файл
+        }
+        return str;
+    }
+
     /**
      * Чтение массива int[] из первой строки текстового файла
      */
@@ -535,6 +550,13 @@ public class ArrayUtils {
             throws FileNotFoundException {
         try (PrintWriter out = new PrintWriter(fileName)) {
             out.println(toString(arr, itemFormat));
+        }
+    }
+
+    public static void writeArrayToFile(String fileName, String arr)
+            throws FileNotFoundException {
+        try (PrintWriter out = new PrintWriter(fileName)) {
+            out.println(arr);
         }
     }
 
@@ -621,4 +643,17 @@ public class ArrayUtils {
     public static int[][] createRandomIntMatrix(int rowCount, int colCount, int maxValue) {
         return createRandomIntMatrix(rowCount, colCount, 0, maxValue);
     }
+
+    public static String arrayToString(int[] arr) {
+        String str= "";
+        for(int i = 0; i < arr.length; i++){
+            if(i == arr.length - 1){
+                str+= arr[i];
+            } else {
+                str+= arr[i] + ", ";
+            }
+        }
+        return str;
+    }
+
 }
